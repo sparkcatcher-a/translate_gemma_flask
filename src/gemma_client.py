@@ -1,6 +1,5 @@
 import subprocess
 import shlex
-import requests
 import yaml
 from typing import Optional
 
@@ -47,18 +46,7 @@ def run_ollama_subprocess(model: str, prompt: str, timeout: Optional[int] = None
     )
 
 
-def run_ollama_http(api_base: str, model: str, prompt: str, timeout: Optional[int] = None) -> str:
-    # Minimal HTTP POST to Ollama API; expects API at api_base like http://localhost:11434
-    url = api_base.rstrip("/") + f"/run/{model}"
-    payload = {"prompt": prompt}
-    resp = requests.post(url, json=payload, timeout=timeout)
-    resp.raise_for_status()
-    data = resp.json()
-    # Ollama HTTP response may vary; try common fields
-    if isinstance(data, dict) and "output" in data:
-        return data["output"]
-    # Fallback to full text
-    return resp.text
+# HTTP mode removed for offline-only operation. Use subprocess-mode with local Ollama CLI.
 
 
 def translate(
@@ -74,11 +62,5 @@ def translate(
     model = model or _CFG.get("model")
     timeout = timeout or _CFG.get("timeout_seconds")
     prompt = build_prompt(source_name, source_code, target_name, target_code, text)
-    mode = _CFG.get("ollama_mode", "subprocess")
-    if mode == "http":
-        api_base = _CFG.get("api_base")
-        if not api_base:
-            raise ValueError("api_base must be set in config.yaml for http mode")
-        return run_ollama_http(api_base, model, prompt, timeout=timeout)
-    else:
-        return run_ollama_subprocess(model, prompt, timeout=timeout)
+    # Force subprocess mode for offline use
+    return run_ollama_subprocess(model, prompt, timeout=timeout)

@@ -11,15 +11,19 @@
       <h1>TranslateGemma — Local</h1>
       <div class="row">
         <div class="col">
-          <label for="source_code">Source</label>
+          <label for="source_code">Base language</label>
           <select id="source_code">
             {% for lang in languages %}
               <option value="{{ lang.code }}" {% if lang.code == default_source %}selected{% endif %}>{{ lang.name }}</option>
             {% endfor %}
           </select>
         </div>
+        <div class="col swap-col">
+          <label>&nbsp;</label>
+          <button id="swap-languages" type="button">Swap</button>
+        </div>
         <div class="col">
-          <label for="target_code">Target</label>
+          <label for="target_code">Base language</label>
           <select id="target_code">
             {% for lang in languages %}
               <option value="{{ lang.code }}" {% if lang.code == default_target %}selected{% endif %}>{{ lang.name }}</option>
@@ -32,6 +36,27 @@
         </div>
       </div>
 
+      <!-- Removed redundant full-language selectors: base selectors above include favorites + full list -->
+
+      <div class="row">
+        <div class="col">
+          <label for="source_variant">Variant</label>
+          <select id="source_variant">
+            {% for variant in source_variants %}
+              <option value="{{ variant.code }}" {% if variant.code == default_source_variant %}selected{% endif %}>{{ variant.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col">
+          <label for="target_variant">Variant</label>
+          <select id="target_variant">
+            {% for variant in target_variants %}
+              <option value="{{ variant.code }}" {% if variant.code == default_target_variant %}selected{% endif %}>{{ variant.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
       <textarea id="input" placeholder="Enter text to translate...">{{ default_text }}</textarea>
       <button id="translate">Translate</button>
       <div id="spinner" style="display:none">Translating…</div>
@@ -39,5 +64,16 @@
       <textarea id="output" readonly></textarea>
     </div>
     <script src="/static/js/app.js"></script>
+    <script>
+      window.languageVariants = {
+        {% for lang_code, variants in language_variants.items() %}
+          "{{ lang_code }}": [
+            {% for variant in variants %}
+              { code: "{{ variant.code }}", name: "{{ variant.name }}" }{% if not loop.last %},{% endif %}
+            {% endfor %}
+          ]{% if not loop.last %},{% endif %}
+        {% endfor %}
+      };
+    </script>
   </body>
 </html>

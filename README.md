@@ -56,6 +56,30 @@ The app reads `config.yaml` for defaults:
 - If you use `ollama serve`, set `ollama_mode: http` and configure `api_base` in `config.yaml`.
 - The UI is intentionally simple and made for manual translation requests rather than live editing.
 
+## Updating the offline variants list
+
+This project uses an offline `variants.yaml` file (at the project root) containing the full set of base languages and their variants supported by TranslateGemma. To refresh that file from the official source (run this when you update your local TranslateGemma model), do the following on a machine with internet access:
+
+1. (Optional but recommended) Create and activate a virtualenv:
+
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+2. Install the single temporary dependency and run the generator script:
+
+```powershell
+py -3 -m pip install requests PyYAML
+py -3 scripts\generate_variants.py
+```
+
+This will overwrite `variants.yaml` with the canonical list fetched from the TranslateGemma page. After this step you can remove the temporary `requests` package from the environment if you like.
+
+Notes:
+- The generator script is `scripts/generate_variants.py`. It is intended for manual use only.
+- If you prefer not to keep network-capable scripts, you can delete the `scripts/` folder after updating `variants.yaml`.
+
 ## Credit
 
 - Parts of the prompt and client logic were inspired by `arrase/gemma-translator`. 
