@@ -25,7 +25,7 @@ function populateSelect(select, items, selectedValue) {
   items.forEach(item => {
     const option = document.createElement('option');
     option.value = item.code;
-    option.textContent = item.name;
+    option.textContent = select.id.endsWith('_variant') ? item.code : item.name;
     if (item.code === selectedValue) {
       option.selected = true;
     }
@@ -42,8 +42,8 @@ function updateVariantOptions(baseCode, variantSelect) {
 async function translate() {
   const source_code = sourceVariantSelect.value || 'de-DE';
   const target_code = targetVariantSelect.value || 'en-US';
-  const source_name = getSelectedOptionText(sourceVariantSelect);
-  const target_name = getSelectedOptionText(targetVariantSelect);
+  const source_name = getSelectedOptionText(sourceSelect);
+  const target_name = getSelectedOptionText(targetSelect);
   const model = modelInput.value || 'translategemma:12b';
   const text = textInput.value;
   output.value = '';
