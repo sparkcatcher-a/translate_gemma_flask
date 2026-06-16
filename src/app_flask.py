@@ -1,8 +1,10 @@
 import os
 import yaml
 from flask import Flask, render_template, request, jsonify
+import logging
 from gemma_client import translate
 
+logging.basicConfig(level=logging.DEBUG)
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 app = Flask(
     __name__,

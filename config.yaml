@@ -5,6 +5,7 @@ default_target: en
 default_text: Hello, how are you?
 ollama_mode: subprocess
 timeout_seconds: 300
+debug_mode: true
 favorite_languages:
 - en
 - de
