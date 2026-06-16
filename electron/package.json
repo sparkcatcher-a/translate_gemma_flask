@@ -1,0 +1,36 @@
+{
+  "name": "translate-gemma-local",
+  "version": "0.1.0",
+  "description": "Local offline translator using Ollama's TranslateGemma model",
+  "main": "main.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "dist": "electron-builder --win portable"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.translategemma.local",
+    "productName": "TranslateGemma Local",
+    "directories": {
+      "buildResources": "../build"
+    },
+    "files": [
+      "main.js",
+      "app/**/*",
+      "resources/**/*"
+    ],
+    "win": {
+      "target": [
+        "portable",
+        "nsis"
+      ]
+    }
+  }
+}
