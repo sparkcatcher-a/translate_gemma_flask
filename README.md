@@ -15,7 +15,6 @@ Simple local desktop-style translator UI using Ollama's TranslateGemma models.
 Open a terminal in the project folder and run:
 
 ```powershell
-cd /d D:\Libraries\Code\translate_gemma_flask
 py -3.14 -m pip install --upgrade pip setuptools wheel
 py -3.14 -m pip install -r requirements.txt
 ```
