@@ -1,0 +1,21 @@
+# Default configuration for TranslateGemma Flask UI
+model: translategemma:12b
+api_base: null
+default_source: en
+default_target: de
+default_text: "Hello, how are you?"
+ollama_mode: subprocess  # options: subprocess, http
+timeout_seconds: 300
+languages:
+  - code: en
+    name: English
+  - code: de
+    name: German
+  - code: es
+    name: Spanish
+  - code: fr
+    name: French
+  - code: it
+    name: Italian
+  - code: ja
+    name: Japanese

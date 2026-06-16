@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TranslateGemma - Local</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>TranslateGemma — Local</h1>
+      <div class="row">
+        <div class="col">
+          <label for="source_code">Source</label>
+          <select id="source_code">
+            {% for lang in languages %}
+              <option value="{{ lang.code }}" {% if lang.code == default_source %}selected{% endif %}>{{ lang.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col">
+          <label for="target_code">Target</label>
+          <select id="target_code">
+            {% for lang in languages %}
+              <option value="{{ lang.code }}" {% if lang.code == default_target %}selected{% endif %}>{{ lang.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col">
+          <label for="model">Model</label>
+          <input id="model" value="{{ default_model }}">
+        </div>
+      </div>
+
+      <textarea id="input" placeholder="Enter text to translate...">{{ default_text }}</textarea>
+      <button id="translate">Translate</button>
+      <div id="spinner" style="display:none">Translating…</div>
+      <h3>Output</h3>
+      <textarea id="output" readonly></textarea>
+    </div>
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>
